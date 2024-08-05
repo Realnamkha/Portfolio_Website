@@ -1,0 +1,148 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+    <section class="s1">
+      <div class="main-container">
+        <div class="greeting-wrapper">
+          <h1>Hi,I am Namga Lama</h1>
+        </div>
+        <div class="intro-wrapper">
+          <div class="left-column">
+            <img id="profile" src="{% static 'images/profile.jpg' %}" alt="profile" />
+            <h5 style="text-align: center;">
+              Personalize Theme
+            </h5>
+
+            <div id="theme-options-wrapper">
+              <div data-active="light" id="light-mode" class="theme-dot"></div>
+              <div data-active="blue" id="blue-mode" class="theme-dot"></div>
+              <div data-active="green" id="green-mode" class="theme-dot"></div>
+              <div data-active="purple" id="purple-mode" class="theme-dot"></div>
+            </div>
+
+            <p id="settings-note">
+              *Theme settings will be saved for<br />your next vist
+            </p>
+          </div>
+          <div class="right-column">
+            <div id="preview-shadow">
+              <div id="preview">
+                <div id="corner-tl" class="corner"></div>
+                <div id="corner-tr" class="corner"></div>
+                <h3>What I Do</h3>
+                <p>
+                  I was a lead developer in a past life, now I enjoy teaching
+                  courses.
+                </p>
+                <div id="corner-br" class="corner"></div>
+                <div id="corner-bl" class="corner"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="s2">
+      <div class="main-container">
+        <div class="about-wrapper">
+          <div class="about-me">
+            <h4>More about me</h4>
+            <p>
+              I build new projects just to tickle my brain and love teaching
+              others how they're made.
+            </p>
+            <p>
+              While I keep busy teaching courses, I still take interviews in
+              search of a great team & projects that interest me.
+            </p>
+            <hr />
+            <div class="skills">
+              <h4>Top Expertise</h4>
+              <p>
+                Back-end developer with primary focus on Django + React:
+                <a target="_blank" href="resume.pdf">Download Resume</a>
+              </p>
+              <div class="skill-lists">
+                <ul>
+                  <li>Python</li>
+                  <li>Django</li>
+                  <li>HTML</li>
+                  <li>CSS</li>
+                  <li>C++</li>
+                </ul>
+                <ul>
+                  <li>AWS</li>
+                  <li>Java</li>
+                  <li>HTML</li>
+                  <li>CSS</li>
+                  <li>C++</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="social">
+            <div>
+              <img src="{% static 'images/images/desktop_wallpaper.jpg' %}" alt="" />
+              <h3 style="text-align:center;">Find me on Youtube and Twitter!</h3>
+
+              <a target="_blank" href="https://www.youtube.com/c/dennisivy"
+                >YouTube: @Namga</a
+              >
+              <br />
+              <a target="_blank" href="https://twitter.com/dennisivy11"
+                >Twitter: @Namga</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="s1">
+      <div class="main-container">
+        <h3 style="text-align: center">Some of my posts</h3>
+        <div class="post-wrapper">
+          {% for post in posts %}
+          <div class="post">
+            <img class="thumbnail" src="{{post.image.url}}" alt="" />
+            <div class="post-preview">
+              <h5 class="post-title">{{post.headline}}</h5>
+              <p class="post-intro">
+                {{post.sub_headline}}
+              </p>
+              <a href="{% url 'post' post.slug %}">Read More</a>
+              {% if request.user.is_authenticated %}
+              <a href="{% url 'update-post' post.slug %}">Edit</a>
+              <a href="{% url 'delete-post' post.slug %}">Delete</a>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <p style="text-align: center;">
+            <a href="{% url 'posts' %}">View More</a>
+        </p>
+      </div>
+    </section>
+    <section class="s2">
+      <div class="main-container">
+        <h3 style="text-align: center">Contact Form</h3>
+        <form id="contact-form" method="POST" action="{% url 'send-email' %}">
+          {% csrf_token %}
+          <a name="contact"></a>
+
+          <label>Name</label>
+          <input class="input-field" type="text" name="name">
+  
+          <label>Subject</label>
+          <input class="input-field" type="text" name="subject">
+  
+          <label>Email</label>
+          <input class="input-field" type="text" name="email">
+  
+          <label>Message</label>
+          <textarea class="input-field" name="message"></textarea>
+          <input id="submit-form" type="submit" value="submit">
+        </form>
+      </div>
+    </section>
+{% endblock %}
